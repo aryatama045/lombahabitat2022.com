@@ -77,7 +77,7 @@
       <div class="sidebar">
 
         <?php
-        $log = $this->model_pengguna->pengguna_edit($this->session->username)->row_array();
+        $log = $this->Model_pengguna->pengguna_edit($this->session->username)->row_array();
         if ($log['foto'] == '') {
           $foto = 'default.jpg';
         } else {
@@ -233,7 +233,7 @@
     });
   </script>
 
-  <?php $this->model_main->kunjungan(); ?>
+  <?php $this->Model_main->kunjungan(); ?>
 </body>
 
 </html>

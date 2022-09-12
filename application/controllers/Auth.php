@@ -6,7 +6,7 @@ class Auth extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_app');
+		$this->load->model('Model_app');
 	}
 
 	public function lupa_password()
@@ -201,7 +201,7 @@ class Auth extends CI_Controller
 				$alamat = array(
 					'id_kota' 	=> $this->input->post('kota')
 				);
-				$this->model_app->insert('tb_alamat', $alamat);
+				$this->Model_app->insert('tb_alamat', $alamat);
 				$data = [
 					'id_alamat'             => $this->db->insert_id(),
 					'email'         		=> htmlspecialchars($this->input->post('email', true)),
@@ -226,7 +226,7 @@ class Auth extends CI_Controller
 					";
 
 				kirim_email($email, $subject, $message);
-				$this->model_app->insert('tb_pengguna', $data);
+				$this->Model_app->insert('tb_pengguna', $data);
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
             <center>Berhasil mendaftar!<br>
             Silahkan cek email anda untuk aktivasi pendaftaran.
@@ -247,7 +247,7 @@ class Auth extends CI_Controller
 	{
 		$code = $_GET['q'];
 
-		$query = $this->model_app->view_where('tb_pengguna', "kode_resetpassword='$code'");
+		$query = $this->Model_app->view_where('tb_pengguna', "kode_resetpassword='$code'");
 		$row = $query->row();
 
 		if (!empty($row)) {

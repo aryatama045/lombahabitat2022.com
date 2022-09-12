@@ -160,7 +160,7 @@ if ($total['proses'] == '0') {
     <tbody>
       <?php
       $no = 1;
-      $rekening = $this->model_app->view('tb_toko_rekening');
+      $rekening = $this->Model_app->view('tb_toko_rekening');
       foreach ($rekening->result_array() as $row) {
       ?>
         <tr>

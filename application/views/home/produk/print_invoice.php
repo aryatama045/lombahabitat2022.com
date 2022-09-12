@@ -9,7 +9,7 @@
 <body>
   <?php
   $total = $this->db->query("SELECT a.waktu_transaksi, a.p_nama, a.p_telp, a.p_kota, a.p_kec, a.p_alamat, a.p_pos, a.kode_transaksi, a.kurir, a.service, a.proses, a.ongkir, sum((b.harga_jual*b.jumlah)-(c.diskon*b.jumlah)) as total, sum(c.berat*b.jumlah) as total_berat FROM `tb_toko_penjualan` a JOIN tb_toko_penjualandetail b ON a.id_penjualan=b.id_penjualan JOIN tb_toko_produk c ON b.id_produk=c.id_produk where a.kode_transaksi='" . $this->uri->segment(3) . "'")->row_array();
-  $iden = $this->model_app->view_where('tb_web_identitas', array('id_identitas' => '1'))->row_array();
+  $iden = $this->Model_app->view_where('tb_web_identitas', array('id_identitas' => '1'))->row_array();
   if ($total['proses'] == '0') {
     $proses = 'Pending';
   } elseif ($total['proses'] == '1') {
@@ -207,7 +207,7 @@
     <tbody>
       <?php
       $no = 1;
-      $rekening = $this->model_app->view('tb_toko_rekening');
+      $rekening = $this->Model_app->view('tb_toko_rekening');
       foreach ($rekening->result_array() as $row) {
       ?>
         <tr>

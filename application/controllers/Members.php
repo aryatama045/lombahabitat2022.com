@@ -5,15 +5,15 @@ class Members extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_app');
-		$this->load->model('model_members');
+		$this->load->model('Model_app');
+		$this->load->model('Model_members');
 	}
 
 	function foto()
 	{
 		cek_session_members();
 		if (isset($_POST['submit'])) {
-			$this->model_members->modupdatefoto();
+			$this->Model_members->modupdatefoto();
 			redirect('members/dashboard');
 		} else {
 			redirect('members/dashboard');
@@ -29,7 +29,7 @@ class Members extends CI_Controller
 		$row = $this->db->get_where('tb_pengguna', "id_pengguna='$id'")->row_array();
 		$data['record'] = $row;
 		$id_alamat = $row['id_alamat'];
-		$data['rows'] = $this->model_app->alamat_konsumen($id_alamat)->row_array();
+		$data['rows'] = $this->Model_app->alamat_konsumen($id_alamat)->row_array();
 		$this->template->load('home/template', 'home/profile/view_dashboard', $data);
 	}
 
@@ -37,13 +37,13 @@ class Members extends CI_Controller
 	{
 		cek_session_members();
 		if (isset($_POST['submit'])) {
-			$this->model_members->profile_update($this->session->id_pengguna);
+			$this->Model_members->profile_update($this->session->id_pengguna);
 			redirect('members/edit_profile');
 		} else {
 			$data['title'] = 'Ubah Profil Saya';
 			$data['breadcrumb'] = 'Ubah Profil';
-			$data['row'] = $this->model_app->profile_konsumen($this->session->id_pengguna)->row_array();
-			$data['kota'] = $this->model_app->view('tb_kota');
+			$data['row'] = $this->Model_app->profile_konsumen($this->session->id_pengguna)->row_array();
+			$data['kota'] = $this->Model_app->view('tb_kota');
 			$this->template->load('home/template', 'home/profile/view_profile_edit', $data);
 		}
 	}
@@ -54,13 +54,13 @@ class Members extends CI_Controller
 		$row = $this->db->get_where('tb_pengguna', array('id_pengguna' => $this->session->id_pengguna))->row_array();
 		$id_alamat = $row['id_alamat'];
 		if (isset($_POST['submit'])) {
-			$this->model_members->alamat_update(decrypt_url($this->input->post('id')));
+			$this->Model_members->alamat_update(decrypt_url($this->input->post('id')));
 			redirect('members/edit_alamat');
 		} else {
 			$data['title'] = 'Ubah Alamat Saya';
 			$data['breadcrumb'] = 'Ubah Alamat';
 			$data['row'] = $this->db->get_where('tb_alamat', array('id_alamat' => $id_alamat))->row_array();
-			$data['kota'] = $this->model_app->view('tb_kota');
+			$data['kota'] = $this->Model_app->view('tb_kota');
 			$this->template->load('home/template', 'home/profile/view_alamat', $data);
 		}
 	}
@@ -100,7 +100,7 @@ class Members extends CI_Controller
 			if (password_verify($pass, $user['password'])) {
 				$data = array('password' => password_hash($pass_new, PASSWORD_DEFAULT));
 				$where = array('id_pengguna' => $id);
-				$this->model_app->update('tb_pengguna', $data, $where);
+				$this->Model_app->update('tb_pengguna', $data, $where);
 				$this->session->set_flashdata('message', '
 				<div class="alert alert-success" role="alert">
             	<center>Password berhasil diganti</center>
@@ -122,7 +122,7 @@ class Members extends CI_Controller
 		$data['title'] = 'Riwayat Belanja';
 		$data['breadcrumb'] = 'Riwayat Belanja';
 
-		$data['record'] = $this->model_app->view_where_ordering('tb_toko_penjualan', array('id_pembeli' => $this->session->id_pengguna), 'id_penjualan', 'DESC');
+		$data['record'] = $this->Model_app->view_where_ordering('tb_toko_penjualan', array('id_pembeli' => $this->session->id_pengguna), 'id_penjualan', 'DESC');
 		$this->template->load('home/template', 'home/profile/view_history', $data);
 	}
 
@@ -130,7 +130,7 @@ class Members extends CI_Controller
 	{
 		cek_session_members();
 		$data['title'] = 'History Orderan anda';
-		$data['record'] = $this->model_app->view_where_ordering('tb_toko_penjualan', array('id_pembeli' => $this->session->id_pengguna), 'id_penjualan', 'DESC');
+		$data['record'] = $this->Model_app->view_where_ordering('tb_toko_penjualan', array('id_pembeli' => $this->session->id_pengguna), 'id_penjualan', 'DESC');
 		$this->template->load('home/template', 'home/produk/view_transaksi_laporan', $data);
 	}
 }

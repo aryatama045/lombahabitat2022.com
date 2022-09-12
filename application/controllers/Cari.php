@@ -7,13 +7,13 @@ class Cari extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('model_app');
-        $this->load->model('model_artikel');
+        $this->load->model('Model_app');
+        $this->load->model('Model_artikel');
     }
 
     function index()
     {
-        $jumlah = $this->model_app->view('tb_toko_produk')->num_rows();
+        $jumlah = $this->Model_app->view('tb_toko_produk')->num_rows();
         $config['base_url'] = base_url() . 'cari';
         $config['total_rows'] = $jumlah;
         $config['per_page'] = 3;
@@ -29,8 +29,8 @@ class Cari extends CI_Controller
                 $data['breadcrumb'] = 'Hasil Pencarian "' . filter($this->input->post('cari')) . '"';
                 $data['title'] = title();
                 $data['judul'] = "Hasil Pencarian keyword - " . filter($this->input->post('cari'));
-                $data['record'] = $this->model_app->cari_produk(filter($this->input->post('cari')));
-                $data['artikel'] = $this->model_artikel->semua_artikel(0, 15);
+                $data['record'] = $this->Model_app->cari_produk(filter($this->input->post('cari')));
+                $data['artikel'] = $this->Model_artikel->semua_artikel(0, 15);
                 $this->template->load('home/template', 'home/cari/view_cari', $data);
             } else {
                 $data['title'] = title();

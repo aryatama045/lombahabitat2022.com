@@ -26,7 +26,7 @@
                   <?php
                   $no = 1;
                   foreach ($record->result_array() as $row) {
-                    $cmenu = $this->model_menu->menu_cek($row['id_parent'])->row_array();
+                    $cmenu = $this->Model_menu->menu_cek($row['id_parent'])->row_array();
                     if ($cmenu['id_parent'] == '') {
                       $menu = '';
                     } else {

@@ -7,8 +7,8 @@ class Keranjang extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('model_app');
-        $this->load->model('model_artikel');
+        $this->load->model('Model_app');
+        $this->load->model('Model_artikel');
     }
 
     function index()
@@ -23,7 +23,7 @@ class Keranjang extends CI_Controller
 
         if ($id_produk != '') {
             if ($stok < $this->input->post('jumlah') or $stok <= '0') {
-                $produk = $this->model_app->edit('tb_toko_produk', array('id_produk' => $id_produk))->row_array();
+                $produk = $this->Model_app->edit('tb_toko_produk', array('id_produk' => $id_produk))->row_array();
                 $produk_cek = filter($produk['nama_produk']);
                 echo "<script>window.alert('Maaf, Stok untuk pemesanan Produk - $produk_cek Tidak Mencukupi!');
                                   window.location=('" . base_url() . "produk/detail/$produk[produk_seo]')</script>";
@@ -34,11 +34,11 @@ class Keranjang extends CI_Controller
                     $this->session->set_userdata(array('idp' => $idp));
                 }
 
-                $cek = $this->model_app->view_where('tb_toko_penjualantemp', array('session' => $this->session->idp, 'id_produk' => $id_produk))->num_rows();
+                $cek = $this->Model_app->view_where('tb_toko_penjualantemp', array('session' => $this->session->idp, 'id_produk' => $id_produk))->num_rows();
                 if ($cek >= 1) {
                     $this->db->query("UPDATE tb_toko_penjualantemp SET jumlah=jumlah+$jumlah where session='" . $this->session->idp . "' AND id_produk='$id_produk'");
                 } else {
-                    $harga = $this->model_app->view_where('tb_toko_produk', array('id_produk' => $id_produk))->row_array();
+                    $harga = $this->Model_app->view_where('tb_toko_produk', array('id_produk' => $id_produk))->row_array();
                     $data = array(
                         'session' => $this->session->idp,
                         'id_produk' => $id_produk,
@@ -47,12 +47,12 @@ class Keranjang extends CI_Controller
                         'satuan' => $harga['satuan'],
                         'waktu_order' => date('Y-m-d H:i:s')
                     );
-                    $this->model_app->insert('tb_toko_penjualantemp', $data);
+                    $this->Model_app->insert('tb_toko_penjualantemp', $data);
                 }
                 redirect('keranjang');
             }
         } else {
-            $data['record'] = $this->model_app->view_join_rows('tb_toko_penjualantemp', 'tb_toko_produk', 'id_produk', array('session' => $this->session->idp), 'id_penjualan_detail', 'ASC');
+            $data['record'] = $this->Model_app->view_join_rows('tb_toko_penjualantemp', 'tb_toko_produk', 'id_produk', array('session' => $this->session->idp), 'id_penjualan_detail', 'ASC');
             $data['title'] = 'Keranjang Belanja';
             $data['breadcrumb'] = 'Keranjang Belanja';
             $this->template->load('home/template', 'home/produk/view_keranjang', $data);
@@ -93,7 +93,7 @@ class Keranjang extends CI_Controller
     function delete()
     {
         $id = array('id_penjualan_detail' => decrypt_url($this->uri->segment(3)));
-        $this->model_app->delete('tb_toko_penjualantemp', $id);
+        $this->Model_app->delete('tb_toko_penjualantemp', $id);
         $isi_keranjang = $this->db->query("SELECT sum(jumlah) as jumlah FROM tb_toko_penjualantemp where session='" . $this->session->idp . "'")->row_array();
         if ($isi_keranjang['jumlah'] == '') {
             $this->session->unset_userdata('idp');
@@ -105,7 +105,7 @@ class Keranjang extends CI_Controller
     function delete2()
     {
         $id = array('id_penjualan_detail' => decrypt_url($this->uri->segment(3)));
-        $this->model_app->delete('tb_toko_penjualantemp', $id);
+        $this->Model_app->delete('tb_toko_penjualantemp', $id);
         $isi_keranjang = $this->db->query("SELECT sum(jumlah) as jumlah FROM tb_toko_penjualantemp where session='" . $this->session->idp . "'")->row_array();
         if ($isi_keranjang['jumlah'] == '') {
             $this->session->unset_userdata('idp');
@@ -135,10 +135,10 @@ class Keranjang extends CI_Controller
                     'p_alamat' => $this->input->post('alamat_pem'),
                     'p_pos' => $this->input->post('pos_pem'),
                 );
-                $this->model_app->insert('tb_toko_penjualan', $data);
+                $this->Model_app->insert('tb_toko_penjualan', $data);
                 $idp = $this->db->insert_id();
 
-                $keranjang = $this->model_app->view_where('tb_toko_penjualantemp', array('session' => $this->session->idp));
+                $keranjang = $this->Model_app->view_where('tb_toko_penjualantemp', array('session' => $this->session->idp));
                 foreach ($keranjang->result_array() as $row) {
                     $dataa = array(
                         'id_penjualan' => $idp,
@@ -147,7 +147,7 @@ class Keranjang extends CI_Controller
                         'harga_jual' => $row['harga_jual'],
                         'satuan' => $row['satuan']
                     );
-                    $this->model_app->insert('tb_toko_penjualandetail', $dataa);
+                    $this->Model_app->insert('tb_toko_penjualandetail', $dataa);
 
                     $q = $this->db->get_where('tb_toko_produk', array('id_produk' => $row['id_produk']));
                     foreach ($q->result() as $r) {
@@ -160,7 +160,7 @@ class Keranjang extends CI_Controller
                     $this->db->where('id_produk', "$row[id_produk]");
                     $this->db->update('tb_toko_produk', $datastok);
                 }
-                $this->model_app->delete('tb_toko_penjualantemp', array('session' => $this->session->idp));
+                $this->Model_app->delete('tb_toko_penjualantemp', array('session' => $this->session->idp));
                 $kons = $this->db->query("SELECT * FROM tb_toko_penjualan a JOIN tb_kota b ON a.p_kota=b.kota_id where a.id_penjualan='$idp'")->row_array();
 
                 $id_pengguna = $this->session->id_pengguna;
@@ -172,8 +172,8 @@ class Keranjang extends CI_Controller
                 $data['orders'] = $this->session->idp;
                 $data['total_bayar'] = rupiah(+$this->input->post('total') + $this->input->post('ongkir'));
 
-                $iden = $this->model_app->view_where('tb_web_identitas', array('id_identitas' => '1'))->row_array();
-                $data['rekening'] = $this->model_app->view('tb_toko_rekening');
+                $iden = $this->Model_app->view_where('tb_web_identitas', array('id_identitas' => '1'))->row_array();
+                $data['rekening'] = $this->Model_app->view('tb_toko_rekening');
 
 
                 $tgl = date("d-m-Y H:i:s");
@@ -226,7 +226,7 @@ class Keranjang extends CI_Controller
 				          <tbody>";
 
                 $no = 1;
-                $belanjaan = $this->model_app->view_join_where('tb_toko_penjualandetail', 'tb_toko_produk', 'id_produk', array('id_penjualan' => $idp), 'id_penjualan_detail', 'ASC');
+                $belanjaan = $this->Model_app->view_join_where('tb_toko_penjualandetail', 'tb_toko_produk', 'id_produk', array('id_penjualan' => $idp), 'id_penjualan_detail', 'ASC');
                 foreach ($belanjaan as $row) {
                     $sub_total = (($row['harga_jual'] - $row['diskon']) * $row['jumlah']);
                     if ($row['diskon'] != '0') {
@@ -281,7 +281,7 @@ class Keranjang extends CI_Controller
 						</thead>
 						<tbody>";
                 $noo = 1;
-                $rekening = $this->model_app->view('tb_toko_rekening');
+                $rekening = $this->Model_app->view('tb_toko_rekening');
                 foreach ($rekening->result_array() as $row) {
                     $message .= "<tr><td>$noo</td>
 						              <td>$row[nama_bank]</td>
@@ -300,7 +300,7 @@ class Keranjang extends CI_Controller
                 kirim_email($email_tujuan, $subject, $message);
                 $data['breadcrumb'] = 'Transaksi Berhasil';
 
-                $iden = $this->model_app->view_ordering_limit('tb_web_identitas', 'id_identitas', 'DESC', 0, 1)->row_array();
+                $iden = $this->Model_app->view_ordering_limit('tb_web_identitas', 'id_identitas', 'DESC', 0, 1)->row_array();
                 $emailadmin = $iden['email'];
                 $subadmin = 'Pesanan Baru';
                 $pesanadmin = 'Hai Admin, ada pesanan baru.. buruan cek sekarang';
@@ -317,11 +317,11 @@ class Keranjang extends CI_Controller
         } else {
             $this->session->set_userdata('bypass', true);
             if ($this->session->id_pengguna) {
-                $cek = $this->model_app->view_where('tb_toko_penjualantemp', array('session' => $this->session->idp));
+                $cek = $this->Model_app->view_where('tb_toko_penjualantemp', array('session' => $this->session->idp));
                 if ($cek->num_rows() >= 1) {
                     $data['title'] = 'Checkout';
                     $data['breadcrumb'] = 'Checkout';
-                    $data['rows'] = $this->model_app->view_join_where_two('tb_pengguna', 'tb_alamat', 'tb_kota', 'id_alamat', 'id_alamat', 'id_kota', 'kota_id', array('tb_pengguna.id_pengguna' => $this->session->id_pengguna))->row_array();
+                    $data['rows'] = $this->Model_app->view_join_where_two('tb_pengguna', 'tb_alamat', 'tb_kota', 'id_alamat', 'id_alamat', 'id_kota', 'kota_id', array('tb_pengguna.id_pengguna' => $this->session->id_pengguna))->row_array();
 
                     $ses = $this->session->idp;
                     $this->db->join('tb_toko_produk', 'tb_toko_penjualantemp.id_produk=tb_toko_produk.id_produk');
@@ -331,7 +331,7 @@ class Keranjang extends CI_Controller
 
                     $data['record'] = $query;
 
-                    //$data['record'] = $this->model_app->view_join_rows('tb_toko_penjualantemp', 'tb_toko_produk', 'id_produk', array('session' => $this->session->idp), 'id_penjualan_detail', 'ASC');
+                    //$data['record'] = $this->Model_app->view_join_rows('tb_toko_penjualantemp', 'tb_toko_produk', 'id_produk', array('session' => $this->session->idp), 'id_penjualan_detail', 'ASC');
                     $this->template->load('home/template', 'home/produk/view_checkouts', $data);
                 } else {
                     redirect('keranjang' . $cek);

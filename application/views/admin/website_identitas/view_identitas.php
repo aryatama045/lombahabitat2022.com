@@ -55,7 +55,7 @@
                       <select class='form-control select2' name='kota' required>
                         <option value=''>- Pilih -</option>
                         <?php
-                        $kota = $this->model_app->view('tb_kota');
+                        $kota = $this->Model_app->view('tb_kota');
                         foreach ($kota->result_array() as $rows) {
                           if ($record['kota_id'] == $rows['kota_id']) {
                             echo "<option value='$rows[kota_id]' selected>$rows[nama_kota]</option>";

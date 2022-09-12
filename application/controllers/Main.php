@@ -7,13 +7,13 @@ class Main extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_app');
-		$this->load->model('model_artikel');
+		$this->load->model('Model_app');
+		$this->load->model('Model_artikel');
 	}
 
 	function index()
 	{
-		$jumlah = $this->model_app->view('tb_toko_produk')->num_rows();
+		$jumlah = $this->Model_app->view('tb_toko_produk')->num_rows();
 		$config['base_url'] = base_url() . 'produk/index';
 		$config['total_rows'] = $jumlah;
 		$config['per_page'] = 12;
@@ -43,8 +43,8 @@ class Main extends CI_Controller
 
 
 			$data['title'] = title();
-			$data['record'] = $this->model_app->view_ordering_limit('tb_toko_produk', 'id_produk', 'DESC', $dari, $config['per_page']);
-			$data['artikel'] = $this->model_artikel->semua_artikel(0, 15);
+			$data['record'] = $this->Model_app->view_ordering_limit('tb_toko_produk', 'id_produk', 'DESC', $dari, $config['per_page']);
+			$data['artikel'] = $this->Model_artikel->semua_artikel(0, 15);
 			$this->pagination->initialize($config);
 			$this->template->load('home/template', 'home/view_home', $data);
 			//$this->load->view('home/template');

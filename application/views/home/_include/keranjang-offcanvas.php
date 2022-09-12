@@ -8,7 +8,7 @@
         </div>
 
         <?php
-        $recordx = $this->model_app->view_join_rows('tb_toko_penjualantemp', 'tb_toko_produk', 'id_produk', array('session' => $this->session->idp), 'id_penjualan_detail', 'ASC');
+        $recordx = $this->Model_app->view_join_rows('tb_toko_penjualantemp', 'tb_toko_produk', 'id_produk', array('session' => $this->session->idp), 'id_penjualan_detail', 'ASC');
         if ($recordx->num_rows() == '0') { ?>
             <div class="dropcart__products-list">
                 <div class="dropcart__product">

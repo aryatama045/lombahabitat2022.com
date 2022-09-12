@@ -11,7 +11,7 @@
 
 
             <?php
-                $menu = $this->model_menu->menu_main();
+                $menu = $this->Model_menu->menu_main();
                 foreach ($menu->result_array() as $row) {
                     ?>
 

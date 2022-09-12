@@ -6,15 +6,16 @@ class Admin extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_app');
-		$this->load->model('model_main');
-		$this->load->model('model_menu');
-		$this->load->model('model_members');
-		$this->load->model('model_laporan');
-		$this->load->model('model_rekening');
-		$this->load->model('model_berita');
-		$this->load->model('model_halaman');
-		$this->load->model('model_artikel');
+		$this->load->model('Model_app');
+		$this->load->model('Model_main');
+		$this->load->model('Model_menu');
+		$this->load->model('Model_members');
+		$this->load->model('Model_laporan');
+		$this->load->model('Model_rekening');
+		$this->load->model('Model_berita');
+		$this->load->model('Model_halaman');
+		$this->load->model('Model_artikel');
+		$this->load->model('Model_pengguna');
 		cek_session_admin();
 	}
 
@@ -33,7 +34,7 @@ class Admin extends CI_Controller
 		if (!empty($this->session->userdata())) {
 
 			$data['title'] = 'Admin ';
-			$data['grap'] = $this->model_main->grafik_kunjungan();
+			$data['grap'] = $this->Model_main->grafik_kunjungan();
 
 			$this->template->load('admin/template', 'admin/view_dashboard', $data);
 		} else {
@@ -45,7 +46,7 @@ class Admin extends CI_Controller
 	{
 
 		$data['title'] = 'Kategori Produk ';
-		$data['record'] = $this->model_app->view_ordering('tb_toko_kategoriproduk', 'id_kategori_produk', 'DESC');
+		$data['record'] = $this->Model_app->view_ordering('tb_toko_kategoriproduk', 'id_kategori_produk', 'DESC');
 
 		$this->template->load('admin/template', 'admin/kategori_produk/view_kategori_produk', $data);
 	}
@@ -55,7 +56,7 @@ class Admin extends CI_Controller
 
 		if (isset($_POST['submit'])) {
 			$data = array('nama_kategori' => $this->input->post('a'), 'kategori_seo' => seo_title($this->input->post('a')));
-			$this->model_app->insert('tb_toko_kategoriproduk', $data);
+			$this->Model_app->insert('tb_toko_kategoriproduk', $data);
 			redirect('admin/kategori_produk');
 		} else {
 
@@ -71,10 +72,10 @@ class Admin extends CI_Controller
 		if (isset($_POST['submit'])) {
 			$data = array('nama_kategori' => $this->input->post('a'), 'kategori_seo' => seo_title($this->input->post('a')));
 			$where = array('id_kategori_produk' => $this->input->post('id'));
-			$this->model_app->update('tb_toko_kategoriproduk', $data, $where);
+			$this->Model_app->update('tb_toko_kategoriproduk', $data, $where);
 			redirect('admin/kategori_produk');
 		} else {
-			$edit = $this->model_app->edit('tb_toko_kategoriproduk', array('id_kategori_produk' => $id))->row_array();
+			$edit = $this->Model_app->edit('tb_toko_kategoriproduk', array('id_kategori_produk' => $id))->row_array();
 			$data = array('rows' => $edit);
 
 			$data['title'] = 'Ubah Produk ';
@@ -85,14 +86,14 @@ class Admin extends CI_Controller
 	function delete_kategori_produk($id)
 	{
 		$where = array('id_kategori_produk' => $id);
-		$this->model_app->delete('tb_toko_kategoriproduk', $where);
+		$this->Model_app->delete('tb_toko_kategoriproduk', $where);
 		echo json_encode(array("status" => TRUE));
 	}
 
 	function produk()
 	{
 		$data['title'] = 'Produk ';
-		$data['record'] = $this->model_app->view_ordering('tb_toko_produk', 'nama_produk', 'ACS');
+		$data['record'] = $this->Model_app->view_ordering('tb_toko_produk', 'nama_produk', 'ACS');
 		$this->template->load('admin/template', 'admin/produk/view_produk', $data);
 	}
 
@@ -141,13 +142,13 @@ class Admin extends CI_Controller
 
 				);
 			}
-			$this->model_app->insert('tb_toko_produk', $data);
+			$this->Model_app->insert('tb_toko_produk', $data);
 			redirect('admin/produk');
 		} else {
 
 			$data['title'] = 'Tambah Produk ';
-			$data['record'] = $this->model_app->view_ordering('tb_toko_kategoriproduk', 'id_kategori_produk', 'DESC');
-			$data['supp'] = $this->model_app->view_ordering('tb_toko_supplier', 'id_supplier', 'DESC');
+			$data['record'] = $this->Model_app->view_ordering('tb_toko_kategoriproduk', 'id_kategori_produk', 'DESC');
+			$data['supp'] = $this->Model_app->view_ordering('tb_toko_supplier', 'id_supplier', 'DESC');
 			$this->template->load('admin/template', 'admin/produk/view_produk_tambah', $data);
 		}
 	}
@@ -201,14 +202,14 @@ class Admin extends CI_Controller
 			}
 
 			$where = array('id_produk' => $this->input->post('id'));
-			$this->model_app->update('tb_toko_produk', $data, $where);
+			$this->Model_app->update('tb_toko_produk', $data, $where);
 			redirect('admin/produk');
 		} else {
 
 			$data['title'] = 'Edit ';
-			$data['supp'] = $this->model_app->view_ordering('tb_toko_supplier', 'id_supplier', 'DESC');
-			$data['record'] = $this->model_app->view_ordering('tb_toko_kategoriproduk', 'id_kategori_produk', 'DESC');
-			$data['rows'] = $this->model_app->edit('tb_toko_produk', array('id_produk' => $id))->row_array();
+			$data['supp'] = $this->Model_app->view_ordering('tb_toko_supplier', 'id_supplier', 'DESC');
+			$data['record'] = $this->Model_app->view_ordering('tb_toko_kategoriproduk', 'id_kategori_produk', 'DESC');
+			$data['rows'] = $this->Model_app->edit('tb_toko_produk', array('id_produk' => $id))->row_array();
 			$this->template->load('admin/template', 'admin/produk/view_produk_edit', $data);
 		}
 	}
@@ -216,7 +217,7 @@ class Admin extends CI_Controller
 	function delete_produk($id)
 	{
 		$where = array('id_produk' => $id);
-		$this->model_app->delete('tb_toko_produk', $where);
+		$this->Model_app->delete('tb_toko_produk', $where);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -225,7 +226,7 @@ class Admin extends CI_Controller
 	{
 
 		$data['title'] = 'Rekening ';
-		$data['record'] = $this->model_rekening->rekening();
+		$data['record'] = $this->Model_rekening->rekening();
 		$this->template->load('admin/template', 'admin/rekening/view_rekening', $data);
 	}
 
@@ -234,7 +235,7 @@ class Admin extends CI_Controller
 	{
 
 		if (isset($_POST['submit'])) {
-			$this->model_rekening->rekening_tambah();
+			$this->Model_rekening->rekening_tambah();
 			redirect('admin/rekening');
 		} else {
 
@@ -249,19 +250,19 @@ class Admin extends CI_Controller
 
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_rekening->rekening_update();
+			$this->Model_rekening->rekening_update();
 			redirect('admin/rekening');
 		} else {
 
 			$data['title'] = 'Edit Rekening ';
-			$data['rows'] = $this->model_rekening->rekening_edit($id)->row_array();
+			$data['rows'] = $this->Model_rekening->rekening_edit($id)->row_array();
 			$this->template->load('admin/template', 'admin/rekening/view_rekening_edit', $data);
 		}
 	}
 
 	function delete_rekening($id)
 	{
-		$this->model_rekening->rekening_delete($id);
+		$this->Model_rekening->rekening_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -286,7 +287,7 @@ class Admin extends CI_Controller
 
 		$data['title'] = 'Supplier ';
 		$pengguna = $this->session->id_pengguna;
-		$data['record'] = $this->model_app->view_ordering('tb_toko_supplier', 'id_supplier', 'DESC');
+		$data['record'] = $this->Model_app->view_ordering('tb_toko_supplier', 'id_supplier', 'DESC');
 		$this->template->load('admin/template', 'admin/supplier/view_supplier', $data);
 	}
 
@@ -305,7 +306,7 @@ class Admin extends CI_Controller
 				'katerangan' => $this->input->post('i'),
 				'id_pengguna' => $this->session->id_pengguna
 			);
-			$this->model_app->insert('tb_toko_supplier', $data);
+			$this->Model_app->insert('tb_toko_supplier', $data);
 			redirect('admin/supplier');
 		} else {
 
@@ -330,12 +331,12 @@ class Admin extends CI_Controller
 				'katerangan' => $this->input->post('i')
 			);
 			$where = array('id_supplier' => $this->input->post('id'));
-			$this->model_app->update('tb_toko_supplier', $data, $where);
+			$this->Model_app->update('tb_toko_supplier', $data, $where);
 			redirect('admin/supplier');
 		} else {
 
 			$data['title'] = 'Edit Supplier ';
-			$proses = $this->model_app->edit('tb_toko_supplier', array('id_supplier' => $id))->row_array();
+			$proses = $this->Model_app->edit('tb_toko_supplier', array('id_supplier' => $id))->row_array();
 			$data = array('rows' => $proses);
 			$this->template->load('admin/template', 'admin/supplier/view_supplier_edit', $data);
 		}
@@ -345,14 +346,14 @@ class Admin extends CI_Controller
 	{
 
 		$where = array('id_supplier' => $id);
-		$this->model_app->delete('tb_toko_supplier', $where);
+		$this->Model_app->delete('tb_toko_supplier', $where);
 		echo json_encode(array("status" => TRUE));
 	}
 
 	function konsumen()
 	{
 		$data['title'] = 'Konsumen ';
-		$data['record'] = $this->model_app->view_where_ordering('tb_pengguna', "level='2'", 'id_pengguna', 'ASC');
+		$data['record'] = $this->Model_app->view_where_ordering('tb_pengguna', "level='2'", 'id_pengguna', 'ASC');
 		$this->template->load('admin/template', 'admin/konsumen/view_konsumen', $data);
 	}
 
@@ -361,13 +362,13 @@ class Admin extends CI_Controller
 
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_members->profile_update($this->input->post('id'));
+			$this->Model_members->profile_update($this->input->post('id'));
 			redirect('admin/konsumen');
 		} else {
 
 			$data['title'] = 'Ubah Konsumen ';
-			$data['row'] = $this->model_app->profile_konsumen($id)->row_array();
-			$data['kota'] = $this->model_app->view('tb_kota');
+			$data['row'] = $this->Model_app->profile_konsumen($id)->row_array();
+			$data['kota'] = $this->Model_app->view('tb_kota');
 			$this->template->load('admin/template', 'admin/konsumen/view_konsumen_edit', $data);
 		}
 	}
@@ -376,8 +377,8 @@ class Admin extends CI_Controller
 	{
 
 		$id = $this->uri->segment(3);
-		$record = $this->model_app->orders_report($id);
-		$edit = $this->model_app->profile_konsumen($id)->row_array();
+		$record = $this->Model_app->orders_report($id);
+		$edit = $this->Model_app->profile_konsumen($id)->row_array();
 		$data = array('rows' => $edit, 'record' => $record);
 		$data['title'] = 'Detail Konsumen ';
 		$this->template->load('admin/template', 'admin/konsumen/view_konsumen_detail', $data);
@@ -387,7 +388,7 @@ class Admin extends CI_Controller
 	{
 
 		$where = array('id_konsumen' => $id);
-		$this->model_app->delete('tb_toko_konsumen', $where);
+		$this->Model_app->delete('tb_toko_konsumen', $where);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -398,7 +399,7 @@ class Admin extends CI_Controller
 
 		$data['title'] = 'Laporan Pesanan Masuk';
 
-		$data['record'] = $this->model_app->orders_report_all();
+		$data['record'] = $this->Model_app->orders_report_all();
 
 		$this->template->load('admin/template', 'admin/penjualan/view_pesanan_laporan', $data);
 	}
@@ -407,8 +408,8 @@ class Admin extends CI_Controller
 	{
 		cek_session();
 		$data['title'] = 'Laporan Pesanan Masuk';
-		$data['record'] = $this->model_app->orders_report_all();
-		$data['iden'] = $this->model_main->identitas()->row_array();
+		$data['record'] = $this->Model_app->orders_report_all();
+		$data['iden'] = $this->Model_main->identitas()->row_array();
 		$this->load->view('admin/penjualan/view_orders_report_print', $data);
 	}
 
@@ -416,7 +417,7 @@ class Admin extends CI_Controller
 	{
 		cek_session();
 		$data['title'] = 'Konfirmasi Pembayaran Pesanan';
-		$data['record'] = $this->model_app->konfirmasi_bayar();
+		$data['record'] = $this->Model_app->konfirmasi_bayar();
 		$this->template->load('admin/template', 'admin/penjualan/view_konfirmasi_bayar', $data);
 	}
 
@@ -426,7 +427,7 @@ class Admin extends CI_Controller
 
 		$data = array('proses' => $this->uri->segment(4));
 		$where = array('id_penjualan' => $this->uri->segment(3));
-		$this->model_app->update('tb_toko_penjualan', $data, $where);
+		$this->Model_app->update('tb_toko_penjualan', $data, $where);
 		redirect('admin/pesanan');
 	}
 
@@ -436,7 +437,7 @@ class Admin extends CI_Controller
 		$kode = $this->uri->segment(5);
 		$data = array('proses' => $this->uri->segment(4));
 		$where = array('id_penjualan' => $this->uri->segment(3));
-		$this->model_app->update('tb_toko_penjualan', $data, $where);
+		$this->Model_app->update('tb_toko_penjualan', $data, $where);
 		redirect('admin/tracking/' . $kode);
 	}
 
@@ -444,9 +445,9 @@ class Admin extends CI_Controller
 	{
 		$data = array('proses' => $this->uri->segment(4));
 		$where = array('id_penjualan' => $this->uri->segment(3));
-		$this->model_app->update('tb_toko_penjualan', $data, $where);
+		$this->Model_app->update('tb_toko_penjualan', $data, $where);
 		$data['title'] = 'Input Resi';
-		$query = $this->model_app->edit('tb_toko_penjualan', array('id_penjualan' => $this->uri->segment(3)))->row_array();
+		$query = $this->Model_app->edit('tb_toko_penjualan', array('id_penjualan' => $this->uri->segment(3)))->row_array();
 		$data = array('rows' => $query);
 
 
@@ -459,9 +460,9 @@ class Admin extends CI_Controller
 
 		$data = array('proses' => $this->uri->segment(4));
 		$where = array('id_penjualan' => $this->uri->segment(3));
-		$this->model_app->update('tb_toko_penjualan', $data, $where);
+		$this->Model_app->update('tb_toko_penjualan', $data, $where);
 		$data['title'] = 'Input Resi';
-		$query = $this->model_app->edit('tb_toko_penjualan', array('id_penjualan' => $this->uri->segment(3)))->row_array();
+		$query = $this->Model_app->edit('tb_toko_penjualan', array('id_penjualan' => $this->uri->segment(3)))->row_array();
 		$data = array('rows' => $query);
 
 		$data['title'] = 'Masukan Resi ';
@@ -477,7 +478,7 @@ class Admin extends CI_Controller
 		if (isset($_POST['submit'])) {
 			$data = array('resi' => $this->input->post('resi'));
 			$where = array('id_penjualan' => $id);
-			$this->model_app->update('tb_toko_penjualan', $data, $where);
+			$this->Model_app->update('tb_toko_penjualan', $data, $where);
 
 			$data1 = array(
 				'proses'    => '3'
@@ -511,10 +512,10 @@ class Admin extends CI_Controller
 	function website()
 	{
 		if (isset($_POST['submit'])) {
-			$this->model_main->identitas_update();
+			$this->Model_main->identitas_update();
 			redirect('admin/website');
 		} else {
-			$data['record'] = $this->model_main->identitas()->row_array();
+			$data['record'] = $this->Model_main->identitas()->row_array();
 
 			$data['title'] = 'Identitas Website ';
 			$this->template->load('admin/template', 'admin/website_identitas/view_identitas', $data);
@@ -523,7 +524,7 @@ class Admin extends CI_Controller
 
 	function menu()
 	{
-		$data['record'] = $this->model_menu->menu_website();
+		$data['record'] = $this->Model_menu->menu_website();
 		$data['title'] = 'Menu Website ';
 		$this->template->load('admin/template', 'admin/website_menu/view_menu', $data);
 	}
@@ -531,11 +532,11 @@ class Admin extends CI_Controller
 	function tambah_menu()
 	{
 		if (isset($_POST['submit'])) {
-			$this->model_menu->menu_website_tambah();
+			$this->Model_menu->menu_website_tambah();
 			redirect('admin/menu');
 		} else {
 			$data['title'] = 'Tambah Menu Website ';
-			$data['record'] = $this->model_menu->menu_utama();
+			$data['record'] = $this->Model_menu->menu_utama();
 			$this->template->load('admin/template', 'admin/website_menu/view_menu_tambah', $data);
 		}
 	}
@@ -544,20 +545,20 @@ class Admin extends CI_Controller
 	{
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_menu->menu_website_update();
+			$this->Model_menu->menu_website_update();
 			redirect('admin/menu');
 		} else {
 
 			$data['title'] = 'Ubah Menu Website ';
-			$data['record'] = $this->model_menu->menu_utama();
-			$data['rows'] = $this->model_menu->menu_edit($id)->row_array();
+			$data['record'] = $this->Model_menu->menu_utama();
+			$data['rows'] = $this->Model_menu->menu_edit($id)->row_array();
 			$this->template->load('admin/template', 'admin/website_menu/view_menu_edit', $data);
 		}
 	}
 
 	function delete_menu($id)
 	{
-		$this->model_menu->menu_delete($id);
+		$this->Model_menu->menu_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -565,12 +566,12 @@ class Admin extends CI_Controller
 	function logo()
 	{
 		if (isset($_POST['submit'])) {
-			$this->model_main->logo_update();
+			$this->Model_main->logo_update();
 			redirect('admin/logo');
 		} else {
 
 			$data['title'] = 'Logo Website ';
-			$data['record'] = $this->model_main->logo();
+			$data['record'] = $this->Model_main->logo();
 			$this->template->load('admin/template', 'admin/website_logo/view_logowebsite', $data);
 		}
 	}
@@ -578,7 +579,7 @@ class Admin extends CI_Controller
 
 	function slider()
 	{
-		$data['record'] = $this->model_main->slide();
+		$data['record'] = $this->Model_main->slide();
 		$data['title'] = 'Slider ';
 		$this->template->load('admin/template', 'admin/website_slider/view_slider', $data);
 	}
@@ -586,10 +587,10 @@ class Admin extends CI_Controller
 	function tambah_slider()
 	{
 		if (isset($_POST['submit'])) {
-			$this->model_main->slide_tambah();
+			$this->Model_main->slide_tambah();
 			redirect('admin/slider');
 		} else {
-			$data['record'] = $this->model_app->view('tb_toko_produk');
+			$data['record'] = $this->Model_app->view('tb_toko_produk');
 
 			$data['title'] = 'Tambah Slider ';
 			$this->template->load('admin/template', 'admin/website_slider/view_slider_tambah', $data);
@@ -600,26 +601,26 @@ class Admin extends CI_Controller
 	{
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_main->slide_update();
+			$this->Model_main->slide_update();
 			redirect('admin/slider');
 		} else {
 
 			$data['title'] = 'Edit Slider ';
-			$data['rows'] = $this->model_main->slide_edit($id)->row_array();
-			$data['record'] = $this->model_app->view('tb_toko_produk');
+			$data['rows'] = $this->Model_main->slide_edit($id)->row_array();
+			$data['record'] = $this->Model_app->view('tb_toko_produk');
 			$this->template->load('admin/template', 'admin/website_slider/view_slider_edit', $data);
 		}
 	}
 
 	function delete_slider($id)
 	{
-		$this->model_main->slide_delete($id);
+		$this->Model_main->slide_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
 	function halaman()
 	{
-		$data['record'] = $this->model_halaman->halaman();
+		$data['record'] = $this->Model_halaman->halaman();
 
 		$data['title'] = 'Halaman ';
 		$this->template->load('admin/template', 'admin/website_halaman/view_halaman', $data);
@@ -628,7 +629,7 @@ class Admin extends CI_Controller
 	function tambah_halaman()
 	{
 		if (isset($_POST['submit'])) {
-			$this->model_halaman->halaman_tambah();
+			$this->Model_halaman->halaman_tambah();
 			redirect('admin/halaman');
 		} else {
 
@@ -641,18 +642,18 @@ class Admin extends CI_Controller
 	{
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_halaman->halaman_update();
+			$this->Model_halaman->halaman_update();
 			redirect('admin/halaman');
 		} else {
 			$data['title'] = 'Ubah Halaman Baru ';
-			$data['rows'] = $this->model_halaman->halaman_edit($id)->row_array();
+			$data['rows'] = $this->Model_halaman->halaman_edit($id)->row_array();
 			$this->template->load('admin/template', 'admin/website_halaman/view_halaman_edit', $data);
 		}
 	}
 
 	function delete_halaman($id)
 	{
-		$this->model_halaman->halaman_delete($id);
+		$this->Model_halaman->halaman_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -660,7 +661,7 @@ class Admin extends CI_Controller
 	function artikel()
 	{
 		$data['title'] = 'Artikel ';
-		$data['record'] = $this->model_artikel->list_artikel();
+		$data['record'] = $this->Model_artikel->list_artikel();
 		$this->template->load('admin/template', 'admin/blog_artikel/view_artikel', $data);
 	}
 
@@ -668,12 +669,12 @@ class Admin extends CI_Controller
 	{
 
 		if (isset($_POST['submit'])) {
-			$this->model_artikel->list_artikel_tambah();
+			$this->Model_artikel->list_artikel_tambah();
 			redirect('admin/artikel');
 		} else {
 			$data['title'] = 'Tambah Artikel ';
-			$data['tag'] = $this->model_artikel->tag_artikel();
-			$data['record'] = $this->model_artikel->kategori_artikel();
+			$data['tag'] = $this->Model_artikel->tag_artikel();
+			$data['record'] = $this->Model_artikel->kategori_artikel();
 			$this->template->load('admin/template', 'admin/blog_artikel/view_artikel_tambah', $data);
 		}
 	}
@@ -683,27 +684,27 @@ class Admin extends CI_Controller
 
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_artikel->list_artikel_update();
+			$this->Model_artikel->list_artikel_update();
 			redirect('admin/artikel');
 		} else {
 			$data['title'] = 'Edit Artikel ';
-			$data['tag'] = $this->model_artikel->tag_artikel();
-			$data['record'] = $this->model_artikel->kategori_artikel();
-			$data['rows'] = $this->model_artikel->list_artikel_edit($id)->row_array();
+			$data['tag'] = $this->Model_artikel->tag_artikel();
+			$data['record'] = $this->Model_artikel->kategori_artikel();
+			$data['rows'] = $this->Model_artikel->list_artikel_edit($id)->row_array();
 			$this->template->load('admin/template', 'admin/blog_artikel/view_artikel_edit', $data);
 		}
 	}
 
 	function delete_artikel($id)
 	{
-		$this->model_artikel->list_artikel_delete($id);
+		$this->Model_artikel->list_artikel_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
 	function kategori_artikel()
 	{
 
-		$data['record'] = $this->model_artikel->kategori_artikel();
+		$data['record'] = $this->Model_artikel->kategori_artikel();
 		$this->template->load('admin/template', 'admin/blog_kategori/view_kategori', $data);
 	}
 
@@ -711,7 +712,7 @@ class Admin extends CI_Controller
 	{
 
 		if (isset($_POST['submit'])) {
-			$this->model_artikel->kategori_artikel_tambah();
+			$this->Model_artikel->kategori_artikel_tambah();
 			redirect('admin/kategori_artikel');
 		} else {
 			$this->template->load('admin/template', 'admin/blog_kategori/view_kategori_tambah');
@@ -723,24 +724,24 @@ class Admin extends CI_Controller
 
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_artikel->kategori_artikel_update();
+			$this->Model_artikel->kategori_artikel_update();
 			redirect('admin/kategori_artikel');
 		} else {
-			$data['rows'] = $this->model_artikel->kategori_artikel_edit($id)->row_array();
+			$data['rows'] = $this->Model_artikel->kategori_artikel_edit($id)->row_array();
 			$this->template->load('admin/template', 'admin/blog_kategori/view_kategori_edit', $data);
 		}
 	}
 
 	function delete_kategori_artikel($id)
 	{
-		$this->model_artikel->kategori_artikel_delete($id);
+		$this->Model_artikel->kategori_artikel_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
 	function tag_artikel()
 	{
 		$data['title'] = 'Tag ';
-		$data['record'] = $this->model_artikel->tag_artikel();
+		$data['record'] = $this->Model_artikel->tag_artikel();
 		$this->template->load('admin/template', 'admin/blog_tag/view_tag', $data);
 	}
 
@@ -748,7 +749,7 @@ class Admin extends CI_Controller
 	{
 
 		if (isset($_POST['submit'])) {
-			$this->model_artikel->tag_artikel_tambah();
+			$this->Model_artikel->tag_artikel_tambah();
 			redirect('admin/tag_artikel');
 		} else {
 			$data['title'] = 'Tambah Tag ';
@@ -761,18 +762,18 @@ class Admin extends CI_Controller
 
 		$id = $this->uri->segment(3);
 		if (isset($_POST['submit'])) {
-			$this->model_artikel->tag_artikel_update();
+			$this->Model_artikel->tag_artikel_update();
 			redirect('admin/tag_artikel');
 		} else {
 			$data['title'] = 'Edit Tag ';
-			$data['rows'] = $this->model_artikel->tag_artikel_edit($id)->row_array();
+			$data['rows'] = $this->Model_artikel->tag_artikel_edit($id)->row_array();
 			$this->template->load('admin/template', 'admin/blog_tag/view_tag_edit', $data);
 		}
 	}
 
 	function delete_tag_artikel($id)
 	{
-		$this->model_artikel->tag_artikel_delete($id);
+		$this->Model_artikel->tag_artikel_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 
@@ -822,7 +823,7 @@ class Admin extends CI_Controller
 				);
 			}
 			$where = array('username' => $this->input->post('id'));
-			$this->model_app->update('tb_pengguna', $data, $where);
+			$this->Model_app->update('tb_pengguna', $data, $where);
 
 			$this->session->set_flashdata('message', '
 				<div class="alert alert-success" role="alert">
@@ -832,7 +833,7 @@ class Admin extends CI_Controller
 			redirect('admin/edit_user/' . $this->input->post('id'));
 		} else {
 			$data['title'] = 'Edit Pengguna ';
-			$proses = $this->model_app->edit('tb_pengguna', array('username' => $id))->row_array();
+			$proses = $this->Model_app->edit('tb_pengguna', array('username' => $id))->row_array();
 			$data = array('rows' => $proses);
 			$this->template->load('admin/template', 'admin/users/view_users_edit', $data);
 		}
@@ -841,14 +842,14 @@ class Admin extends CI_Controller
 	function delete_user($id)
 	{
 		$where = array('username' => $id);
-		$this->model_app->delete('tb_pengguna', $where);
+		$this->Model_app->delete('tb_pengguna', $where);
 		echo json_encode(array("status" => TRUE));
 	}
 
 	function users()
 	{
 		$data['title'] = 'Manajemen Pengguna ';
-		// $data['record'] = $this->model_app->view_ordering('tb_pengguna', 'username', 'DESC');
+		// $data['record'] = $this->Model_app->view_ordering('tb_pengguna', 'username', 'DESC');
 		$data['record'] = $this->db->query("SELECT * FROM tb_pengguna ORDER BY level ASC,username ASC")->result_array();
 		$this->template->load('admin/template', 'admin/users/view_users', $data);
 	}
@@ -885,7 +886,7 @@ class Admin extends CI_Controller
 					'level' => $this->db->escape_str($this->input->post('g')),
 				);
 			}
-			$this->model_app->insert('tb_pengguna', $data);
+			$this->Model_app->insert('tb_pengguna', $data);
 			redirect('admin/edit_user/' . $this->input->post('a'));
 		} else {
 			$data['title'] = 'Tambah Pengguna ';
@@ -897,35 +898,35 @@ class Admin extends CI_Controller
 	function laporan()
 	{
 		$data['title'] = 'Laporan Penjualan ';
-		$data['record'] = $this->model_laporan->laporan();
+		$data['record'] = $this->Model_laporan->laporan();
 		$this->template->load('admin/template', 'admin/laporan/view_lap_penjualan', $data);
 	}
 
 	function laporan_hari()
 	{
 		$data['title'] = 'Laporan Penjualan ';
-		$data['record'] = $this->model_laporan->laporan1();
+		$data['record'] = $this->Model_laporan->laporan1();
 		$this->template->load('admin/template', 'admin/laporan/view_lap_penjualan', $data);
 	}
 
 	function laporan_minggu()
 	{
 		$data['title'] = 'Laporan Penjualan ';
-		$data['record'] = $this->model_laporan->laporan7();
+		$data['record'] = $this->Model_laporan->laporan7();
 		$this->template->load('admin/template', 'admin/laporan/view_lap_penjualan', $data);
 	}
 
 	function laporan_bulan()
 	{
 		$data['title'] = 'Laporan Penjualan ';
-		$data['record'] = $this->model_laporan->laporan30();
+		$data['record'] = $this->Model_laporan->laporan30();
 		$this->template->load('admin/template', 'admin/laporan/view_lap_penjualan', $data);
 	}
 
 	function laporan_tahun()
 	{
 		$data['title'] = 'Laporan Penjualan ';
-		$data['record'] = $this->model_laporan->laporan360();
+		$data['record'] = $this->Model_laporan->laporan360();
 		$this->template->load('admin/template', 'admin/laporan/view_lap_penjualan', $data);
 	}
 
@@ -936,7 +937,7 @@ class Admin extends CI_Controller
 	function newsletter()
 	{
 
-		$data['record'] = $this->model_berita->list_berita();
+		$data['record'] = $this->Model_berita->list_berita();
 		$data['title'] = 'Newsletter ';
 		$this->template->load('admin/template', 'admin/subs/view_berita', $data);
 	}
@@ -963,12 +964,12 @@ class Admin extends CI_Controller
 			$config['newline'] = "\r\n";
 			$ci->email->initialize($config);
 			$ci->email->from('demo-ecommerce@zamanet.com', "Zamanet Store");
-			$ci->email->to($this->model_app->emailsend());
+			$ci->email->to($this->Model_app->emailsend());
 			$ci->email->subject("$judul");
 			$ci->email->message("$isi");
 			$ci->email->send();
 
-			$this->model_berita->list_berita_tambah();
+			$this->Model_berita->list_berita_tambah();
 			redirect('admin/newsletter');
 		} else {
 			$data['title'] = 'Kirim News Letter ';
@@ -982,13 +983,13 @@ class Admin extends CI_Controller
 		$data['title'] = 'Detail Berita ';
 
 		$id = $this->uri->segment(3);
-		$data['rows'] = $this->model_berita->list_berita_edit($id)->row_array();
+		$data['rows'] = $this->Model_berita->list_berita_edit($id)->row_array();
 		$this->template->load('admin/template', 'admin/subs/view_berita_edit', $data);
 	}
 
 	function delete_newsletter($id)
 	{
-		$this->model_berita->list_berita_delete($id);
+		$this->Model_berita->list_berita_delete($id);
 		echo json_encode(array("status" => TRUE));
 	}
 

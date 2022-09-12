@@ -10,7 +10,7 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="format-detection" content="telephone=no">
-    <title><?php echo $title; ?></title>
+    <title><?= $iden['nama_website']; ?></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">

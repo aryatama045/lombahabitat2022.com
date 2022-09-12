@@ -98,8 +98,8 @@
                     </div>
                     <?php
                     if ($this->uri->segment(2) == 'kategori') {
-                        $cek = $this->model_app->edit('tb_toko_kategoriproduk', array('kategori_seo' => $this->uri->segment(3)))->row_array();
-                        $jumlah = $this->model_app->view_where('tb_toko_produk', array('id_kategori_produk' => $cek['id_kategori_produk']))->num_rows();
+                        $cek = $this->Model_app->edit('tb_toko_kategoriproduk', array('kategori_seo' => $this->uri->segment(3)))->row_array();
+                        $jumlah = $this->Model_app->view_where('tb_toko_produk', array('id_kategori_produk' => $cek['id_kategori_produk']))->num_rows();
                         if ($jumlah <= 0) { ?>
                             <div class="text-center mt-3 mb-3">
                                 <h5>Maaf produk pada kategori ini belum tersedia.</h5>

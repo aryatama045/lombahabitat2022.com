@@ -26,8 +26,8 @@
                   <?php
                   $no = 1;
                   foreach ($record as $row) {
-                    // $jual = $this->model_app->jual($row['id_produk'])->row_array();
-                    // $beli = $this->model_app->beli($row['id_produk'])->row_array();
+                    // $jual = $this->Model_app->jual($row['id_produk'])->row_array();
+                    // $beli = $this->Model_app->beli($row['id_produk'])->row_array();
                     echo "<tr><td>$no</td>
                               <td>$row[nama_produk]</td>
                               <td>Rp " . rupiah($row['harga_beli']) . "</td>

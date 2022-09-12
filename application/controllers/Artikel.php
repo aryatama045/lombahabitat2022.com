@@ -6,13 +6,13 @@ class Artikel extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_artikel');
+		$this->load->model('Model_artikel');
 	}
 	public function index()
 	{
 		$data['title'] = 'Artikel' . ' - ' . title();
 		$data['breadcrumb'] = 'Artikel';
-		$data['artikel'] = $this->model_artikel->semua_artikel(0, 15);
+		$data['artikel'] = $this->Model_artikel->semua_artikel(0, 15);
 		$this->template->load('home/template', 'home/artikel/view_semua_artikel', $data);
 	}
 
@@ -27,9 +27,9 @@ class Artikel extends CI_Controller
 		}
 		$data['title'] = $row->judul;
 		$data['breadcrumb'] = $row->judul;
-		$data['record'] = $this->model_artikel->artikel_detail($ids)->row_array();
-		$data['infoterbaru'] = $this->model_artikel->info_terbaru(6);
-		$this->model_artikel->artikel_dibaca_update($ids);
+		$data['record'] = $this->Model_artikel->artikel_detail($ids)->row_array();
+		$data['infoterbaru'] = $this->Model_artikel->info_terbaru(6);
+		$this->Model_artikel->artikel_dibaca_update($ids);
 		$this->template->load('home/template', 'home/artikel/view_artikel', $data);
 	}
 
@@ -44,7 +44,7 @@ class Artikel extends CI_Controller
 		}
 		$data['title'] = $row->nama_kategori . " - " . title();
 		$data['breadcrumb'] = $row->nama_kategori;
-		$data['kategori'] = $this->model_artikel->detail_kategori($row->id_kategori, 9);
+		$data['kategori'] = $this->Model_artikel->detail_kategori($row->id_kategori, 9);
 		$this->template->load('home/template', 'home/artikel/view_kategori', $data);
 	}
 }

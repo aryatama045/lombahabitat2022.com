@@ -54,7 +54,7 @@
                     <ul class="widget-categories__list" data-collapse data-collapse-opened-class="widget-categories__item--open">
 
                         <?php
-                        $kategori = $this->model_app->view('tb_blog_kategori');
+                        $kategori = $this->Model_app->view('tb_blog_kategori');
                         foreach ($kategori->result_array() as $row) {
                         ?>
 

@@ -6,7 +6,7 @@ class Konfirmasi extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_app');
+		$this->load->model('Model_app');
 	}
 
 	function index()
@@ -14,13 +14,13 @@ class Konfirmasi extends CI_Controller
 		if (isset($_GET['q'])) {
 
 			$kode_transaksi = $_GET['q'];
-			$cek = $this->model_app->view_where('tb_toko_penjualan', array('kode_transaksi' => $kode_transaksi));
+			$cek = $this->Model_app->view_where('tb_toko_penjualan', array('kode_transaksi' => $kode_transaksi));
 			$row = $this->db->query("SELECT id_penjualan FROM `tb_toko_penjualan` where kode_transaksi='$kode_transaksi'")->row_array();
-			$data['record'] = $this->model_app->view('tb_toko_rekening');
+			$data['record'] = $this->Model_app->view('tb_toko_rekening');
 
 			$data['total'] = $this->db->query("SELECT a.kode_transaksi, a.kurir, a.service, a.proses, a.ongkir, sum((b.harga_jual*b.jumlah)-(c.diskon*b.jumlah)) as total, sum(c.berat*b.jumlah) as total_berat FROM `tb_toko_penjualan` a JOIN tb_toko_penjualandetail b ON a.id_penjualan=b.id_penjualan JOIN tb_toko_produk c ON b.id_produk=c.id_produk where a.kode_transaksi='" . $kode_transaksi . "'")->row_array();
-			$data['rows'] = $this->model_app->view_where('tb_toko_penjualan', array('id_penjualan' => $row['id_penjualan']))->row_array();
-			$data['ksm'] = $this->model_app->view_where('tb_pengguna', array('id_pengguna' => $this->session->id_pengguna))->row_array();
+			$data['rows'] = $this->Model_app->view_where('tb_toko_penjualan', array('id_penjualan' => $row['id_penjualan']))->row_array();
+			$data['ksm'] = $this->Model_app->view_where('tb_pengguna', array('id_pengguna' => $this->session->id_pengguna))->row_array();
 
 			$data['title'] = 'Konfirmasi Pembayaran';
 			$data['breadcrumb'] = 'Konfirmasi Pembayaran';
@@ -28,15 +28,15 @@ class Konfirmasi extends CI_Controller
 		} else {
 			if (isset($_POST['submit1'])) {
 				$kode_transaksi = filter($this->input->post('a'));
-				$cek = $this->model_app->view_where('tb_toko_penjualan', array('kode_transaksi' => $kode_transaksi));
+				$cek = $this->Model_app->view_where('tb_toko_penjualan', array('kode_transaksi' => $kode_transaksi));
 				if ($cek->num_rows() >= 1) {
 
 					$row = $this->db->query("SELECT id_penjualan FROM `tb_toko_penjualan` where kode_transaksi='$kode_transaksi'")->row_array();
-					$data['record'] = $this->model_app->view('tb_toko_rekening');
+					$data['record'] = $this->Model_app->view('tb_toko_rekening');
 
 					$data['total'] = $this->db->query("SELECT a.kode_transaksi, a.kurir, a.service, a.proses, a.ongkir, sum((b.harga_jual*b.jumlah)-(c.diskon*b.jumlah)) as total, sum(c.berat*b.jumlah) as total_berat FROM `tb_toko_penjualan` a JOIN tb_toko_penjualandetail b ON a.id_penjualan=b.id_penjualan JOIN tb_toko_produk c ON b.id_produk=c.id_produk where a.kode_transaksi='" . $kode_transaksi . "'")->row_array();
-					$data['rows'] = $this->model_app->view_where('tb_toko_penjualan', array('id_penjualan' => $row['id_penjualan']))->row_array();
-					$data['ksm'] = $this->model_app->view_where('tb_pengguna', array('id_pengguna' => $this->session->id_pengguna))->row_array();
+					$data['rows'] = $this->Model_app->view_where('tb_toko_penjualan', array('id_penjualan' => $row['id_penjualan']))->row_array();
+					$data['ksm'] = $this->Model_app->view_where('tb_pengguna', array('id_pengguna' => $this->session->id_pengguna))->row_array();
 
 					$data['title'] = 'Konfirmasi Pembayaran';
 					$data['breadcrumb'] = 'Konfirmasi Pembayaran';
@@ -85,9 +85,9 @@ class Konfirmasi extends CI_Controller
 			$this->db->insert('tb_toko_konfirmasi', $data);
 			$data1 = array('proses' => '1');
 			$where = array('id_penjualan' => $this->input->post('id'));
-			$this->model_app->update('tb_toko_penjualan', $data1, $where);
+			$this->Model_app->update('tb_toko_penjualan', $data1, $where);
 
-			$iden = $this->model_app->view_ordering_limit('tb_web_identitas', 'id_identitas', 'DESC', 0, 1)->row_array();
+			$iden = $this->Model_app->view_ordering_limit('tb_web_identitas', 'id_identitas', 'DESC', 0, 1)->row_array();
 			$email_tujuan = $iden['email'];
 			$subject = 'Konfirmasi';
 			$message = 'Hai Admin, ada konfirmasi pembayaran.. buruan cek sekarang';
@@ -108,7 +108,7 @@ class Konfirmasi extends CI_Controller
 				$kode_transaksi = filter($this->input->post('kode'));
 			}
 
-			$cek = $this->model_app->view_where('tb_toko_penjualan', array('kode_transaksi' => $kode_transaksi));
+			$cek = $this->Model_app->view_where('tb_toko_penjualan', array('kode_transaksi' => $kode_transaksi));
 			if ($cek->num_rows() >= 1) {
 				$data['title'] = 'Rincian Pesanan';
 				$data['breadcrumb'] = 'Rincian Pesanan ' . '"' . $kode_transaksi . '"';

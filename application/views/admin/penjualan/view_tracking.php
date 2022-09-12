@@ -173,7 +173,7 @@
                   $cek_konfirmasi = $this->db->get_where('tb_toko_konfirmasi', array('id_penjualan' => $total['id_penjualan']));
                   if ($cek_konfirmasi->num_rows() >= 1) {
                     echo "<div class='alert alert-primary' style='border-radius:0px; padding:5px'>Konfirmasi Pembayaran dari Pembeli : </div>";
-                    $konfirmasi = $this->model_app->view_join_where('tb_toko_konfirmasi', 'tb_toko_rekening', 'id_rekening', array('id_penjualan' => $total['id_penjualan']), 'id_konfirmasi_pembayaran', 'DESC');
+                    $konfirmasi = $this->Model_app->view_join_where('tb_toko_konfirmasi', 'tb_toko_rekening', 'id_rekening', array('id_penjualan' => $total['id_penjualan']), 'id_konfirmasi_pembayaran', 'DESC');
                     foreach ($konfirmasi as $r) {
                   ?>
                       <div class='col-md-12'>

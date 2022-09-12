@@ -6,14 +6,14 @@ class Cek extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('model_app');
+		$this->load->model('Model_app');
 	}
 
 	public function index()
 	{
 		$code = $_GET['q'];
 
-		$query = $this->model_app->view_where('tb_pengguna', "kode_aktivasi='$code'");
+		$query = $this->Model_app->view_where('tb_pengguna', "kode_aktivasi='$code'");
 		$row = $query->row();
 
 		if (!empty($row)) {
@@ -24,7 +24,7 @@ class Cek extends CI_Controller
 					$data = array(
 						'aktif' => 1,
 					);
-					$this->model_app->update('tb_pengguna', $data, "kode_aktivasi='$code'");
+					$this->Model_app->update('tb_pengguna', $data, "kode_aktivasi='$code'");
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
 														<center>Selamat, akun Anda berhasil diaktivasi.<br>
 															Silahkan masuk menggunakan akun Anda.

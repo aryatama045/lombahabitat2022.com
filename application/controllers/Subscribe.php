@@ -5,7 +5,7 @@ class Subscribe extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('model_app');
+        $this->load->model('Model_app');
     }
 
     function index()
@@ -25,7 +25,7 @@ class Subscribe extends CI_Controller
 
                     $data1 = array('aktif' => '1');
                     $where = array('email' => $email);
-                    $this->model_app->update('tb_subs', $data1, $where);
+                    $this->Model_app->update('tb_subs', $data1, $where);
                     $this->session->set_flashdata('message', "<div class='alert alert-success' role='alert'>
                     <center><b>Berhasil!</b><br>
                     Kami akan mengirimkan informasi yang terbaru seputar produk dan promo menarik dari Zamanet Store.
