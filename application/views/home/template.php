@@ -70,32 +70,10 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
 
         <div class="site__body">
 
-            <!-- breadcrumb -->
-            <?php
-            if ($this->uri->segment(1) == '' or $this->uri->segment(1) == 'main') {
-                echo '';
-            } else { ?>
-                <div class="page-header">
-                    <div class="page-header__container container">
-                        <div class="page-header__breadcrumb">
-                            <!-- <nav aria-label="breadcrumb">
-                                <small>
-                                    <a href="<?= base_url() ?>">Home</a>
-
-                                    <i class="fas fa-angle-right mx-2 text-secondary"></i>
-                                    <?= $breadcrumb; ?>
-
-                                </small>
-                            </nav> -->
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
 
             <!-- konten-->
-            <div class="container">
+            
                 <?= $konten; ?>
-            </div>
 
         </div>
 
