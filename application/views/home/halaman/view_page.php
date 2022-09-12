@@ -3,7 +3,7 @@
 <div class="post__header post-header" 
     style="background: hsl(196deg 100% 47%) !important;
     margin-bottom: 20px;
-    margin-top: 10px;
+    margin-top: 0px;
     padding-top: 40px;
     padding-bottom: 24px;">
     <h4 class="post-header__title" style="text-align:center;"><?= $record['judul']; ?></h4>
