@@ -1,7 +1,7 @@
 <?php $tanggal = tgl_indo($record['tgl_posting']); ?>
 
 <div class="post__header post-header" 
-    style="background: #1e82c4 !important;
+    style="background: hsl(196deg 100% 47%) !important;
     margin-bottom: 20px;
     margin-top: 10px;
     padding-top: 40px;
