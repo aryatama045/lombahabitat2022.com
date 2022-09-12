@@ -24,7 +24,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |
 */
 
-$config['base_url'] = 'https://lombahhd2021.com/';
+$config['base_url'] = 'https://lombahabitat2022.com/';
 
 
 /*
