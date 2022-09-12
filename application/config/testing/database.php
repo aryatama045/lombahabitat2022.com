@@ -75,10 +75,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => '151.106.118.86',
-	'username' => 'u1272680_lombahabitat2022',
-	'password' => '2022Lombahabitat',
-	'database' => 'u1272680_lombahabitat2022',
+	'hostname' => '',
+	'username' => '',
+	'password' => '',
+	'database' => '',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
