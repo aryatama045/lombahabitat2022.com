@@ -11,7 +11,6 @@
         <div class="mobilemenu__content">
             <ul class="mobile-links mobile-links--level--0" data-collapse data-collapse-opened-class="mobile-links__item--open">
 
-                           
             <?php
             $menu = $this->M_menu->menu_main();
             foreach ($menu->result_array() as $row) {
@@ -59,9 +58,9 @@
 
             <br>
            
-            <a style="margin-left: 3em;" href="<?= base_url() ?>" class="mobile-header__logo-menu">
+            <!-- <a style="margin-left: 3em;" href="<?= base_url() ?>" class="mobile-header__logo-menu">
                 <img width="150px" src="<?= base_url('assets/images/favicon/') ?><?= $iden['favicon']; ?>">
-            </a>
+            </a> -->
         
         </div>
     </div>
