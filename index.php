@@ -60,7 +60,7 @@
 			$env = 'development';
 			break;
 		case 'lombahabitat2022.com':
-			$env = 'developments';
+			$env = 'development';
 			break;
 		default:
 			$env = 'production';
