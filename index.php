@@ -57,10 +57,10 @@
 	// PENGECEKAN DYNAMIC ENVIRONMENT SESUAI HOST SERVER
 	switch ($_SERVER['HTTP_HOST']) {
 		case 'localhost':
-			$env = 'testing';
+			$env = 'development';
 			break;
 		case 'lombahabitat2022.com':
-			$env = 'development';
+			$env = 'production';
 			break;
 		default:
 			$env = 'production';
