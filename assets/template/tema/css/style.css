@@ -5294,6 +5294,10 @@ screen and (-ms-high-contrast:active) {
     color: inherit
 }
 
+.nav-links_item_active a{
+    color: #36c !important;
+}
+
 .nav-links__item-link:hover {
     color: inherit
 }
