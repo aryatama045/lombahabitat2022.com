@@ -5991,7 +5991,7 @@ screen and (-ms-high-contrast:active) {
 }
 .site-header__logo img {
     position: fixed;
-    right: 0px;
+    right: 15px;
 }
 
 .site-header__logo a {
