@@ -64,7 +64,7 @@ $this->load->model('Model_menu');?>
                 <div class="site-header__nav-panel">
                     <!-- data-sticky-mode - one of [pullToShow, alwaysOnTop] -->
                     <div class="nav-panel nav-panel--sticky" data-sticky-mode="alwaysOnTop">
-                        <div class="nav-panel__container container" style="padding-left: 99px;">
+                        <div class="nav-panel__container container" style="padding-left: 160px;">
                             <div class="nav-panel__row">
 
                                 <a style="    position: fixed;left: 1em;" href="<?= base_url();?>" class="site-header__logo2"><img src="<?= base_url();?>assets/logo-t1.png" height="60px"></a>
