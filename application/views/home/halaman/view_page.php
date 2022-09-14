@@ -1,4 +1,8 @@
-<?php $tanggal = tgl_indo($record['tgl_posting']); ?>
+<?php $tanggal = tgl_indo($record['tgl_posting']);
+$url = $this->uri->ruri_string();
+$card = $url!='page/detail/hadiah-juara'?'card':'';
+$card_body = $url!='page/detail/hadiah-juara'?'card-body':'';
+?>
 
 <div class="post__header post-header" 
     style="background: hsl(196deg 100% 47%) !important;
@@ -12,18 +16,12 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="block
-            <?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card';
-            ?>
-            post--layout--classic">
+            <div class="block <?= $card ?> post--layout--classic">
 
 
                 <!-- <div class="post__featured"><a href="#"><img src="" alt=""></a></div> -->
 
-                <div class="<?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card-body'; ?>
-                post__content typography">
-
-                <?=  tesx($url); ?>
+                <div class="<?= $card_body ?> post__content typography">
 
                     <?= $record['isi_halaman']; ?>
 
