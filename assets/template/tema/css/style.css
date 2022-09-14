@@ -3404,7 +3404,7 @@ screen and (-ms-high-contrast:active) {
 }
 
 .typography li:nth-child(odd) ::marker {
-    background-color: rgb(49, 197, 235);
+    background-color: rgb(138, 214, 233);
     padding: 10px;
     color: black;
 }
