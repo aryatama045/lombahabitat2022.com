@@ -704,11 +704,11 @@ p {
     
     .tm-hero-text-container-inner2 {
       margin-top: -17em;
-      left: 3em;
+      left: 2em;
       position: absolute;
     }
     .tm-hero-text-container-inner2 img {
-        width: 80%;
+        width: 90%;
     }
     
     .tm-hero-text-container-inner3 {
@@ -718,7 +718,7 @@ p {
     }
 
     .tm-hero-text-container-inner3 img {
-      width: 200px;
+      width: 165px;
   }
 
     
