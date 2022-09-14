@@ -699,7 +699,7 @@ p {
       position: absolute;
     }
     .tm-hero-text-container-inner img {
-        width: 40%;
+        width: 33%;
     }
     
     .tm-hero-text-container-inner2 {
@@ -712,13 +712,13 @@ p {
     }
     
     .tm-hero-text-container-inner3 {
-        margin-top: 7em;
+        margin-top: 8em;
         right: 1em;
         position: absolute;
     }
 
     .tm-hero-text-container-inner3 img {
-      width: 140px;
+      width: 105px;
   }
 
     
