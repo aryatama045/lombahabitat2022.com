@@ -3398,13 +3398,13 @@ screen and (-ms-high-contrast:active) {
 
 
 .typography li:nth-child(odd) {
-    background-color: #95c0fb;
+    background-color: #00b2edd4;
     padding: 10px;
     color: black;
 }
 
 .typography li:nth-child(odd) ::marker {
-    background-color: rgb(49, 197, 235);
+    background-color: #00b2edd4;
     padding: 10px;
     color: black;
 }
