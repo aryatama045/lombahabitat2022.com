@@ -13,7 +13,8 @@
     <div class="row">
         <div class="col-12">
             <div class="block
-            <?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card'; ?>
+            <?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card';
+            tesx($url); ?>
             post--layout--classic">
 
 
