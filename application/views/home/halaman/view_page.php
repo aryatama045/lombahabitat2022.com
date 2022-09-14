@@ -12,12 +12,15 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="block card post post--layout--classic">
+            <div class="block
+            <?= $this->uri->ruri_string()=='page/detail/hadiah-juara'?'':'card'; ?>
+            post--layout--classic">
 
 
                 <!-- <div class="post__featured"><a href="#"><img src="" alt=""></a></div> -->
 
-                <div class="card-body post__content typography">
+                <div class="<?= $this->uri->ruri_string()=='page/detail/hadiah-juara'?'':'card-body'; ?>
+                post__content typography">
 
                     <?= $record['isi_halaman']; ?>
 
