@@ -68,36 +68,32 @@ $this->load->model('Model_menu');?>
                             <div class="nav-panel__row">
 
                                 <a style="    position: fixed;left: 1em;" href="<?= base_url();?>" class="site-header__logo2"><img src="<?= base_url();?>assets/logo-t1.png" height="60px"></a>
-                                <!-- <a style="    position: fixed;left: 10em;" href="<?= base_url();?>" class="site-header__logo2"><img src="<?= base_url();?>assets/logo-t2.png" height="60px"></a> -->
 
                                 <div class="nav-panel__nav-links nav-links">
                                     <ul class="nav-links__list">
 
-                                        <?php
-                                        $menu = $this->M_menu->menu_main();
+                                        <?php $menu = $this->M_menu->menu_main();
+
+                                        $item_menu= array();
                                         foreach ($menu->result_array() as $row) {
                                             $dropdown = $this->M_menu->dropdown_menu($row['id_menu'])->num_rows();
+
+                                            $rurl = $this->uri->ruri_string();
+                                            $active_link = $row['link'] == $rurl ? 'nav-links_item_active':'';
+
                                             if ($dropdown == 0) {
                                         ?>
-                                                <li class="nav-links__item">
-                                                        <a class="nav-links__item-link /*btn-medium btn-warning*/" href="<?= base_url() . $row['link']; ?>">
-                                                            <div class="nav-links__item-body"><?= $row['nama_menu']; ?></div>
-                                                        </a>
-                                                    <!-- <?php if($row['nama_menu']=='PENDAFTARAN'){ ?>
-                                                        <a class="nav-links__item-link" href="<?= $row['link']; ?>">
-                                                            <div class="nav-links__item-body"><?= $row['nama_menu']; ?></div>
-                                                        </a> -->
 
-                                                    <!-- <?php } else { ?> -->
-                                                        
-                                                    <!-- <?php } ?> -->
-
+                                                <li class="nav-links__item <?= $active_link ?>">
+                                                    <a class="nav-links__item-link  /*btn-medium btn-warning*/" href="<?= base_url() . $row['link']; ?>">
+                                                        <div class="nav-links__item-body"><?= $row['nama_menu']; ?></div>
+                                                    </a>
                                                 </li>
 
                                             <?php } else { ?>
 
-                                                <li class="nav-links__item nav-links__item--has-submenu">
-                                                    <a class="nav-links__item-link /*btn-medium btn-warning*/" href="#">
+                                                <li class="nav-links__item nav-links__item--has-submenu ">
+                                                    <a class="nav-links__item-link  /*btn-medium btn-warning*/" href="#">
                                                         <div class="nav-links__item-body"><?= $row['nama_menu']; ?>
                                                             <svg class="nav-links__item-arrow" width="9px" height="6px">
                                                                 <use xlink:href="<?= base_url('assets/template/tema/') ?>images/sprite.svg#arrow-rounded-down-9x6">
@@ -112,9 +108,12 @@ $this->load->model('Model_menu');?>
                                                             <ul class="menu__list">
                                                                 <?php
                                                                 $dropmenu = $this->M_menu->dropdown_menu($row['id_menu']);
-                                                                foreach ($dropmenu->result_array() as $row) { ?>
+                                                                foreach ($dropmenu->result_array() as $row) {
+                                                                    $active_link2 = $row['link'] == $rurl ? 'nav-links_item_active':'';
+                                                                ?>
+ 
 
-                                                                    <li class="menu__item">
+                                                                    <li class="menu__item <?= $active_link2 ?>">
                                                                         <div class="menu__item-submenu-offset"></div>
                                                                         <a class="menu__item-link" href="<?= base_url() . $row['link']; ?>">
                                                                             <?= $row['nama_menu']; ?>
@@ -128,21 +127,20 @@ $this->load->model('Model_menu');?>
                                                     </div>
                                                 </li>
 
-                                        <?php }
+                                            <?php }
                                         } ?>
+
 
                                     </ul>
                                 </div><!-- .nav-links / end -->
 
-                                                             
+
                                 <?php
                                     $logo = $this->M_app->view_ordering_limit('tb_web_logo', 'id_logo', 'DESC', 0, 1);
                                     foreach ($logo->result_array() as $row) {
                                         echo "<a href='" . base_url() . "' class='site-header__logo'><img height='70px' src='" . base_url() . "assets/images/logo/$row[gambar]'/></a>";
                                     }
                                 ?>
-                                
-                                
 
                             </div>
 

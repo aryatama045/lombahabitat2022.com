@@ -50,3 +50,22 @@ function decrypt_url($string)
     $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
     return $output;
 }
+
+
+
+function tesx()
+{
+    $env = (ENVIRONMENT == 'production') ? 'none' : 'block';
+    $args = func_get_args();
+    if(is_array($args) && count($args)){ foreach($args as $x){
+        $echo = "<div style='display:$env'><pre>";
+        if(is_array($x) || is_object($x)){
+            $echo .= print_r($x, true);
+        }else{
+            $echo .= var_export($x, true);
+        }
+        $echo .= "</pre><hr /></div>";
+        echo $echo;
+    }}
+    die();
+}
