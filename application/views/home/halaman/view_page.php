@@ -14,7 +14,7 @@
         <div class="col-12">
             <div class="block
             <?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card';
-            tesx($url); ?>
+            ?>
             post--layout--classic">
 
 
@@ -22,6 +22,8 @@
 
                 <div class="<?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card-body'; ?>
                 post__content typography">
+
+                <?php  tesx($url); ?>
 
                     <?= $record['isi_halaman']; ?>
 
