@@ -23,7 +23,7 @@
                 <div class="<?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card-body'; ?>
                 post__content typography">
 
-                <?php  tesx($url); ?>
+                <?=  tesx($url); ?>
 
                     <?= $record['isi_halaman']; ?>
 
