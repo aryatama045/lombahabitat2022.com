@@ -13,13 +13,13 @@
     <div class="row">
         <div class="col-12">
             <div class="block
-            <?php $this->uri->ruri_string()=='page/detail/hadiah-juara'?'':'card'; ?>
+            <?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card'; ?>
             post--layout--classic">
 
 
                 <!-- <div class="post__featured"><a href="#"><img src="" alt=""></a></div> -->
 
-                <div class="<?php $this->uri->ruri_string()=='page/detail/hadiah-juara'?'':'card-body'; ?>
+                <div class="<?php $url = $this->uri->ruri_string(); $url=='page/detail/hadiah-juara'?'':'card-body'; ?>
                 post__content typography">
 
                     <?= $record['isi_halaman']; ?>
