@@ -703,7 +703,7 @@ p {
     }
     
     .tm-hero-text-container-inner2 {
-      margin-top: -12em;
+      margin-top: -15em;
       left:  1em;
       position: absolute;
     }
@@ -712,8 +712,8 @@ p {
     }
     
     .tm-hero-text-container-inner3 {
-        margin-top: 8em;
-        right: 1em;
+      margin-top: 8em;
+      right: 3em;
         position: absolute;
     }
 
