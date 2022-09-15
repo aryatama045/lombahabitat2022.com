@@ -190,7 +190,6 @@ a:focus {
     .tm-hero-text-container-inner5 {
         margin-top: -14em;
         right: 0em;
-        position: absolute;
     }
 }
 
@@ -229,7 +228,6 @@ a:focus {
     .tm-hero-text-container-inner5 {
         margin-top: -14em;
         right: 0em;
-        position: absolute;
     }
 }
 
@@ -260,6 +258,7 @@ a:focus {
   margin-top: -4em;
   left: 21em;
   position: absolute;
+  z-index: 1;
 
 }
 .tm-hero-text-container-inner2 img {
@@ -285,12 +284,16 @@ a:focus {
 }
 
 .tm-hero-text-container-inner5 {
-  margin-top: -18em;
-  right: 16em;
-  position: absolute;
+    position: inherit;
+    z-index: 0;
 }
 .tm-hero-text-container-inner5 img {
-width: 170px;
+  width: 100%;
+}
+.img-center-5 {
+  bottom: 0;
+  position: absolute;
+  z-index: 0;
 }
 .tm-hero-title {
   font-size: 3.5rem;
@@ -694,7 +697,7 @@ p {
     
   
     .tm-hero-text-container-inner {
-      margin-top: 7em;
+      margin-top: 9em;
       left: 1rem;  
       position: absolute;
     }
@@ -712,7 +715,7 @@ p {
     }
     
     .tm-hero-text-container-inner3 {
-        margin-top: 8em;
+        margin-top: 10em;
         right: 2em;
         position: absolute;
     }
@@ -723,12 +726,12 @@ p {
 
     
     .tm-hero-text-container-inner5 img {
-        width: 118px;
+        width: 100%;
     }
     .tm-hero-text-container-inner5 {
-        margin-top: -14em;
-        right: 0em;
-        position: absolute;
+      margin-top: -14em;
+      right: 0em;
+      bottom: 0;
     }
 }
 
