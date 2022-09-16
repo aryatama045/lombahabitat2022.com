@@ -248,6 +248,7 @@ a:focus {
   margin-top: -7em;
   left: 6em;
   position: absolute;
+  z-index: 1;
 }
 
 .tm-hero-text-container-inner img {
