@@ -48,6 +48,16 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
         var site_url = '<?= base_url() ?>';
     </script>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-S91R3JMM4M"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-S91R3JMM4M');
+    </script>
+
 
 </head>
 
