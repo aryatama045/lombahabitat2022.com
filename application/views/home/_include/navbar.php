@@ -67,7 +67,7 @@ $this->load->model('Model_menu');?>
                         <div class="nav-panel__container container" style="padding-left: 160px;">
                             <div class="nav-panel__row">
 
-                                <a style="    position: fixed;left: 1em;" href="https://ciptakarya.pu.go.id/seknashabitat/index.php/home.html" class="site-header__logo2">
+                                <a style="    position: fixed;left: 1em;" href="https://ciptakarya.pu.go.id/seknashabitat/index.php/home.html" target="_blank" class="site-header__logo2">
                                 <img src="<?= base_url();?>assets/logo-t1.png" height="60px"></a>
 
                                 <div class="nav-panel__nav-links nav-links">
@@ -139,7 +139,7 @@ $this->load->model('Model_menu');?>
                                 <?php
                                     $logo = $this->M_app->view_ordering_limit('tb_web_logo', 'id_logo', 'DESC', 0, 1);
                                     foreach ($logo->result_array() as $row) {
-                                        echo "<a href='https://pu.go.id/' class='site-header__logo'><img height='70px' src='" . base_url() . "assets/images/logo/$row[gambar]'/></a>";
+                                        echo "<a href='https://pu.go.id/' target='_blank' class='site-header__logo'><img height='70px' src='" . base_url() . "assets/images/logo/$row[gambar]'/></a>";
                                     }
                                 ?>
 
