@@ -97,7 +97,7 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
             position: relative;
             color: white;
         }
-        .title:after{
+        /* .title:after{
             position: absolute;
             content: "";
             right: -15%;
@@ -105,11 +105,14 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
             border-top: 28px solid transparent;
             border-right: 20px solid transparent;
             border-bottom: 21px solid transparent;
-            top: 0px
-        }
+            top: 0px;
+        } */
         .title h5{font-size: 18px;margin: 8% 0}
         .news marquee{font-size: 18px;margin-top: 12px}
-        .news-content p{margin-right: 41px;display: inline}
+        .news-content p{
+            margin-right: 41px;
+            color: white;
+            display: inline;}
     </style>
 
 
