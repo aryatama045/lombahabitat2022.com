@@ -241,7 +241,7 @@ h6 {
     background-color: #490d40;
   background: url(../../../../assets/home/bg.png) no-repeat center center;
   background-size: cover;
-  height: 700px;
+  /* height: 700px; */
   /*margin-top: -20px;*/
 }
 

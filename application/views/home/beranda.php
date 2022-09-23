@@ -73,6 +73,45 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
     </script>
     <!-- End Google Tag Manager PU -->
 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+        a{color: #fff;text-decoration: none}
+        .ticker{
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+            height: 50px;
+            margin: 0 auto;
+            bottom: 0;
+            position: sticky;
+        }
+        .news{
+            width: 80%;
+            background: #cc4444;
+            padding: 0 2%;
+        }
+        .title{
+            width: 20%;
+            text-align: center;
+            background: #c81c1c;
+            position: relative;
+            color: white;
+        }
+        .title:after{
+            position: absolute;
+            content: "";
+            right: -15%;
+            border-left: 20px solid #c81c1c;
+            border-top: 28px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 21px solid transparent;
+            top: 0px
+        }
+        .title h5{font-size: 18px;margin: 8% 0}
+        .news marquee{font-size: 18px;margin-top: 12px}
+        .news-content p{margin-right: 41px;display: inline}
+    </style>
+
 
 
 
@@ -125,9 +164,23 @@ $iden = $this->db->query("SELECT * FROM tb_web_identitas where id_identitas='1'"
 
             </div>
         </section>
+
+
     </div>
+    <div class="ticker">
+            <div class="title">
+                <h5>UPDATE !!</h5>
+            </div>
+            <div class="news">
+                <marquee class="news-content">
+                    <p>Alamat Email Pengiriman Karya !! <a href="https://lombahabitat2022.com/page/detail/pengiriman-karya">Klik Detail</a> </p>
+                </marquee>
+            </div>
+        </div>
 
     <?php $this->M_main->kunjungan(); ?>
+
+
 
     <script src="<?= base_url('assets/template/tema/') ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="<?= base_url('assets/template/tema/') ?>vendor/photoswipe/photoswipe.min.js"></script>
